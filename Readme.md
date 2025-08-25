@@ -13,7 +13,6 @@ This project fulfills the requirements for a modern Personal Task Manager web ap
 
 ---
 
-
 ## ✨ Core Features
 - **User Authentication**: Login, registration, protected routes, JWT
 - **Dashboard**: Task statistics, recent tasks, quick actions, welcome message
@@ -24,7 +23,6 @@ This project fulfills the requirements for a modern Personal Task Manager web ap
 - **API Integration**: Axios instance, interceptors, token handling, error handling
 
 ---
-
 
 ## 🗂️ Folder Structure
 ```
@@ -49,7 +47,6 @@ Task-Manager/
 ```
 
 ---
-
 
 ## ⚡ Quick Start
 
@@ -164,6 +161,119 @@ Backend: [http://localhost:5000](http://localhost:5000)
 	cd backend
 	npm install
 	```
+<<<<<<< HEAD
+
+	Create a `.env` file in `backend/`:
+
+	```env
+	MONGO_URI=your_mongodb_connection_string
+	JWT_SECRET=your_jwt_secret
+	NODE_ENV=development
+	PORT=5000
+	```
+
+	Start the backend server:
+
+	```sh
+	npm run dev
+	```
+=======
+2. Create a `.env` file with:
+>>>>>>> 0db3e2c6a4ea3877e98c612c21c18c541f321a31
+
+	### 3. Frontend Setup
+
+	```sh
+	cd ../frontend
+	npm install
+<<<<<<< HEAD
+	npm run dev
+	```
+
+	Frontend: [http://localhost:5173](http://localhost:5173)  
+	Backend: [http://localhost:5000](http://localhost:5000)
+
+	---
+=======
+	```
+
+	# Task-Manager
+
+	[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/vishnujangid88/Task-Manager)
+	[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+	[![Tech Stack](https://img.shields.io/badge/stack-MERN-blue)](https://github.com/vishnujangid88/Task-Manager)
+
+	<p align="center">
+		<img src="frontend/src/assets/logo.png" alt="Task Manager Logo" width="120" />
+	</p>
+
+	<p align="center">
+		<b>A modern, full-stack web app for personal task management.</b><br>
+		<i>React + TypeScript + Vite | Node.js + Express + MongoDB</i>
+	</p>
+
+	---
+
+	## 🚀 Demo
+
+	![Demo GIF](frontend/src/assets/demo.gif)
+
+	---
+
+	## ✨ Features
+
+	- Secure user authentication (JWT, protected routes)
+	- Dashboard with task stats, recent activity
+	- Create, edit, delete, mark complete/incomplete tasks
+	- Filter, search, and sort tasks
+	- User profile: view/edit info, change password
+	- Theme toggle (light/dark mode)
+	- Responsive, modern UI (Material-UI)
+	- Toast notifications, error boundaries
+	- Real-time connection status
+
+	---
+
+	## 🗂️ Folder Structure
+
+	```
+	Task-Manager/
+	├── backend/      # Node.js/Express/MongoDB API
+	│   ├── config/
+	│   ├── controllers/
+	│   ├── middleware/
+	│   ├── models/
+	│   ├── routes/
+	│   └── ...
+	├── frontend/     # React + Vite + Material-UI client
+	│   ├── src/
+	│   │   ├── assets/
+	│   │   ├── components/
+	│   │   ├── context/
+	│   │   ├── css/
+	│   │   ├── pages/
+	│   │   └── ...
+	│   └── ...
+	└── README.md
+	```
+
+	---
+
+	## ⚡ Quick Start
+
+	### 1. Clone the repository
+
+	```sh
+	git clone https://github.com/vishnujangid88/Task-Manager.git
+	cd Task-Manager
+	```
+
+	### 2. Backend Setup
+
+	```sh
+	cd backend
+	npm install
+	```
 
 	Create a `.env` file in `backend/`:
 
@@ -192,6 +302,100 @@ Backend: [http://localhost:5000](http://localhost:5000)
 	Backend: [http://localhost:5000](http://localhost:5000)
 
 	---
+
+	## 🔗 API Documentation
+
+	| Method | Endpoint                | Description                       |
+	|--------|-------------------------|-----------------------------------|
+	| POST   | /api/auth/register      | Register a new user               |
+	| POST   | /api/auth/login         | Login user                        |
+	| GET    | /api/auth/profile       | Get current user profile          |
+	| PUT    | /api/auth/profile       | Update user profile               |
+	| PUT    | /api/auth/change-password| Change password                  |
+	| GET    | /api/auth/stats         | Get account statistics            |
+	| GET    | /api/tasks              | Get all tasks                     |
+	| POST   | /api/tasks              | Create a new task                 |
+	| PUT    | /api/tasks/:id          | Update a task                     |
+	| DELETE | /api/tasks/:id          | Delete a task                     |
+	| GET    | /api/health             | Health check                      |
+
+	---
+
+	## 🧩 Component Hierarchy
+
+	```
+	App
+	├── Navbar
+	├── PrivateRoute
+	├── Dashboard
+	│   ├── TaskList
+	│   ├── TaskForm
+	├── Login
+	├── Register
+	├── Profile
+	├── Settings
+	├── Welcome
+	```
+
+	---
+
+	## 🌐 Deployment
+
+	- Backend: Render, Heroku, Vercel
+	- Frontend: Vercel, Netlify
+	- Set CORS and environment variables as needed
+
+	---
+
+	## 👥 Contributing
+
+	Contributions are welcome! Please open issues or submit pull requests for improvements, bug fixes, or new features.
+
+	1. Fork the repo
+	2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+	3. Commit your changes (`git commit -m 'Add some feature'`)
+	4. Push to the branch (`git push origin feature/AmazingFeature`)
+	5. Open a Pull Request
+
+	---
+
+	## ❓ FAQ
+
+	**Q: Why can't I login/register?**  
+	A: Check your MongoDB connection string and JWT secret in `.env`.
+
+	**Q: How do I change the theme?**  
+	A: Use the theme toggle in Settings.
+
+	**Q: How do I deploy?**  
+	A: See the Deployment section above.
+
+	---
+
+	## 📧 Support
+
+	For questions, contact [maintainer](mailto:vishnujangid88@gmail.com) or open an issue.
+
+	---
+
+	## 📄 License
+
+	MIT
+## Component Hierarchy
+```
+App
+├── Navbar
+├── PrivateRoute
+├── Dashboard
+│   ├── TaskList
+│   ├── TaskForm
+├── Login
+├── Register
+├── Profile
+├── Settings
+├── Welcome
+```
+>>>>>>> 0db3e2c6a4ea3877e98c612c21c18c541f321a31
 
 
 	## 🔗 API Documentation
