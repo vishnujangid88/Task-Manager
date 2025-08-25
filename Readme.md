@@ -193,7 +193,7 @@ A: Follow the deployment section above, ensuring all environment variables are p
 
 ## 📧 Support
 
-- **Email:** [vishnujangid88@gmail.com](mailto:vishnujangid88@gmail.com)
+- **Email:** [jangidharsh62@gmail.com](mailto:jangidharsh62@gmail.com)
 - **Issues:** [GitHub Issues](https://github.com/vishnujangid88/Task-Manager/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/vishnujangid88/Task-Manager/discussions)
 
