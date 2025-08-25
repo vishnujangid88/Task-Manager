@@ -1,11 +1,15 @@
-import React, { useState, useEffect, type JSX } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface ConnectionStatusProps {
   className?: string;
 }
 
-const ConnectionStatus = ({ className = '' }: ConnectionStatusProps): JSX.Element => {
+const ConnectionStatus = ({ className = '' }: ConnectionStatusProps) => {
   const [status, setStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
   const [lastChecked, setLastChecked] = useState<Date | null>(null);
 
@@ -51,14 +55,23 @@ const ConnectionStatus = ({ className = '' }: ConnectionStatusProps): JSX.Elemen
   };
 
   return (
-    <div className={getStatusClass()} onClick={checkConnection} style={{ cursor: 'pointer' }}>
-      {getStatusText()}
+    <Box display="flex" alignItems="center" gap={2} sx={{ cursor: 'pointer' }} onClick={checkConnection}>
+      <Chip
+        label={
+          status === 'checking' ? (
+            <><CircularProgress size={16} color="info" sx={{ mr: 1 }} /> Checking...</>
+          ) : status === 'connected' ? '✅ Backend Connected' : '❌ Backend Disconnected'
+        }
+        color={status === 'connected' ? 'success' : status === 'disconnected' ? 'error' : 'default'}
+        variant="outlined"
+        sx={{ fontWeight: 600, fontSize: '1rem' }}
+      />
       {lastChecked && (
-        <div style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '0.2rem' }}>
+        <Typography variant="caption" color="text.secondary">
           Last checked: {lastChecked.toLocaleTimeString()}
-        </div>
+        </Typography>
       )}
-    </div>
+    </Box>
   );
 };
 

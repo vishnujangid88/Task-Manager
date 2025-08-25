@@ -1,10 +1,16 @@
-import React, { useContext, type JSX } from 'react';
+import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
-const PrivateRoute = (): JSX.Element => {
+const PrivateRoute = () => {
   const { user, loading } = useContext(AuthContext);
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="40vh">
+      <CircularProgress color="primary" />
+    </Box>
+  );
   return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
 

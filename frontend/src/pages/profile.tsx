@@ -2,8 +2,15 @@ import { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import type { AuthContextType } from "../context/AuthContext";
 import { toast } from "react-toastify";
-import "../css/Profile.css"; // Import the CSS file
 import axios from "axios";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
 
 interface User {
   _id: string;
@@ -18,7 +25,7 @@ interface AccountStats {
 }
 
 const Profile = () => {
-  const { user, updateProfile, changePassword } = useContext<AuthContextType>(AuthContext);
+  const { user, updateProfile, changePassword } = useContext(AuthContext as React.Context<AuthContextType>);
   const [username, setUsername] = useState(user?.username || "");
   const [email, setEmail] = useState(user?.email || "");
   const [oldPassword, setOldPassword] = useState("");
@@ -89,92 +96,89 @@ const Profile = () => {
 
   if (!user)
     return (
-      <div className="profile-page">
-        <p className="message">Please log in first.</p>
-      </div>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+        <Typography variant="h6" color="text.secondary">Please log in first.</Typography>
+      </Box>
     );
 
   return (
-    <div className="profile-page">
-      <h1 className="profile-title">User Profile</h1>
-      <div className="profile-container">
-        {/* Edit Profile */}
-        <div className="profile-card">
-          <h2>Edit Profile</h2>
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-            />
-          </div>
-          <div className="form-group">
-            <label>Email Address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-            />
-          </div>
-          <button onClick={handleProfileUpdate} disabled={isUpdatingProfile}>
+    <Box sx={{ fontFamily: 'Inter, Arial, sans-serif' }}>
+      <Typography variant="h4" fontWeight={700} mb={3} textAlign="center">User Profile</Typography>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} justifyContent="center" alignItems="flex-start">
+        <Paper elevation={4} sx={{ p: 3, borderRadius: 4, minWidth: 280 }}>
+          <Typography variant="h6" fontWeight={600} mb={2}>Edit Profile</Typography>
+          <TextField
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <Button variant="contained" color="primary" onClick={handleProfileUpdate} disabled={isUpdatingProfile} fullWidth>
+            {isUpdatingProfile ? <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} /> : null}
             {isUpdatingProfile ? "Saving..." : "Save Changes"}
-          </button>
-        </div>
+          </Button>
+        </Paper>
 
-        {/* Change Password */}
-        <div className="profile-card">
-          <h2>Change Password</h2>
-          <div className="form-group">
-            <label>Current Password</label>
-            <input
-              type="password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              placeholder="Enter current password"
-            />
-          </div>
-          <div className="form-group">
-            <label>New Password</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password (min 6 chars)"
-            />
-          </div>
-          <button onClick={handleChangePassword} disabled={isChangingPassword}>
+        <Paper elevation={4} sx={{ p: 3, borderRadius: 4, minWidth: 280 }}>
+          <Typography variant="h6" fontWeight={600} mb={2}>Change Password</Typography>
+          <TextField
+            label="Current Password"
+            type="password"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="New Password"
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <Button variant="contained" color="secondary" onClick={handleChangePassword} disabled={isChangingPassword} fullWidth>
+            {isChangingPassword ? <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} /> : null}
             {isChangingPassword ? "Updating..." : "Update Password"}
-          </button>
-        </div>
-        {/* New Account Statistics Card */}
-        <div className="profile-card account-stats-card">
-          <h2>Account Statistics</h2>
+          </Button>
+        </Paper>
+
+        <Paper elevation={4} sx={{ p: 3, borderRadius: 4, minWidth: 280 }}>
+          <Typography variant="h6" fontWeight={600} mb={2}>Account Statistics</Typography>
           {statsLoading ? (
-            <p>Loading stats...</p>
+            <Box display="flex" alignItems="center" justifyContent="center" py={2}>
+              <CircularProgress color="primary" />
+              <Typography variant="body2" ml={2}>Loading stats...</Typography>
+            </Box>
           ) : accountStats ? (
-            <div className="stats-grid">
-              <div className="stat-item">
-                <h3>{accountStats.totalTasks}</h3>
-                <p>Total Tasks</p>
-              </div>
-              <div className="stat-item">
-                <h3>{accountStats.completedTasks}</h3>
-                <p>Completed Tasks</p>
-              </div>
-              <div className="stat-item">
-                <h3>{accountStats.pendingTasks}</h3>
-                <p>Pending Tasks</p>
-              </div>
-            </div>
+            <Stack direction="row" spacing={2} justifyContent="center" alignItems="center">
+              <Box textAlign="center">
+                <Typography variant="h5" fontWeight={700}>{accountStats.totalTasks}</Typography>
+                <Typography variant="body2">Total Tasks</Typography>
+              </Box>
+              <Box textAlign="center">
+                <Typography variant="h5" fontWeight={700}>{accountStats.completedTasks}</Typography>
+                <Typography variant="body2">Completed</Typography>
+              </Box>
+              <Box textAlign="center">
+                <Typography variant="h5" fontWeight={700}>{accountStats.pendingTasks}</Typography>
+                <Typography variant="body2">Pending</Typography>
+              </Box>
+            </Stack>
           ) : (
-            <p>No statistics available.</p>
+            <Typography variant="body2" color="text.secondary">No statistics available.</Typography>
           )}
-        </div>
-      </div>
-    </div>
+        </Paper>
+      </Stack>
+    </Box>
   );
 };
 

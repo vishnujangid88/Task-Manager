@@ -1,33 +1,46 @@
-import React, { useContext, type JSX } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
-import '../css/Navbar.css'
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import { useTheme } from '@mui/material/styles';
+// import logo from '../assets/logo.png';
 
-const Navbar = (): JSX.Element => {
+const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const theme = useTheme();
 
   return (
-    <nav>
-      <h1>Task Manager</h1>
-      <div className="nav-content">
-        {user ? (
-          <div className="nav-menu authenticated">
-            <div className="nav-links">
-              
-              <Link to="/dashboard">Dashboard</Link>
-              <Link to="/profile">Profile</Link>
-              <Link to="/settings">Settings</Link>
-              <button onClick={logout}>Logout</button>
-            </div>
-          </div>
-        ) : (
-          <div className="nav-links">
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-          </div>
-        )}
-      </div>
-    </nav>
+    <AppBar position="static" color="primary" sx={{ fontFamily: 'Inter, Arial, sans-serif' }}>
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 2 }}>
+          <Avatar sx={{ width: 36, height: 36 }} />
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 700 }}>
+          Task Manager
+        </Typography>
+        <Box>
+          {user ? (
+            <>
+              <Button color="inherit" component={RouterLink} to="/dashboard">Dashboard</Button>
+              <Button color="inherit" component={RouterLink} to="/profile">Profile</Button>
+              <Button color="inherit" component={RouterLink} to="/settings">Settings</Button>
+              <Button color="secondary" variant="contained" sx={{ ml: 2 }} onClick={logout}>Logout</Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" component={RouterLink} to="/login">Login</Button>
+              <Button color="inherit" component={RouterLink} to="/register">Register</Button>
+            </>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

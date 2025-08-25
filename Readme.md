@@ -1,43 +1,94 @@
-# MERN Personal Task Manager
+# Personal Task Manager Application
 
-Built this fully functional Personal task manager application within a very tight timeline of two days. It was a challenging project, but I successfully completed it, ensuring that all core features and assignment requirements were met.
-
-<img width="1200" height="840" alt="Vite-React-TS-07-19-2025_05_44_AM" src="https://github.com/user-attachments/assets/c48af11b-edec-4e4e-bea5-75ea821509de" />
-
-live site- https://personal-task-manager-dtaj.onrender.com (still in process to debug few error but the site is fully functional)
+A comprehensive web application for personal task management, built with React (frontend) and Node.js/Express/MongoDB (backend).
 
 ## Features
+- User authentication (login, register, protected routes)
+- Dashboard with task statistics and recent tasks
+- Task management: create, edit, delete, mark complete/incomplete
+- Task list view with filters, search, and sorting
+- User profile: view/edit info, change password, account stats
+- Settings: theme toggle (light/dark mode)
+- Responsive, modern UI (Material-UI)
+- API integration with Axios
+- Error boundaries and robust error handling
+- Toast notifications and loading spinners
 
-- User registration and authentication (JWT + HTTP-only cookies)
-- Secure login/logout
-- Create, read, update, and delete tasks
-- Set and display task priority (Low, Medium, High)
-- Add and display task due dates
-- Search tasks by title, description, priority, or due date
-- Edit user profile (username and email)
-- Change user password
-- View account statistics (total, completed, pending tasks)
-- Dark and Light mode theme switching
-- User-specific task lists
-- Responsive, clean React frontend with a dashboard-like profile page
-- Protected routes for authenticated users
+## Folder Structure
+```
+Personal-Task-Manager-Application/
+  backend/        # Node.js/Express/MongoDB API
+  frontend/       # React + Material-UI client
+```
 
-## Tech Stack
+## Setup Instructions
+### Backend
+1. Install dependencies:
+	```bash
+	cd backend
+	npm install
+	```
+2. Create a `.env` file with:
+	```env
+	MONGO_URI=your_mongodb_connection_string
+	JWT_SECRET=your_jwt_secret
+	NODE_ENV=development
+	PORT=5000
+	```
+3. Start the backend:
+	```bash
+	npm run dev
+	```
 
-- **Frontend:** React, TypeScript, Vite, React Router, React Toastify
-- **Backend:** Node.js, Express, MongoDB, Mongoose, JWT, bcryptjs
-- **Styling:** Tailwind CSS, Custom CSS
+### Frontend
+1. Install dependencies:
+	```bash
+	cd frontend
+	npm install
+	```
+2. Start the frontend:
+	```bash
+	npm run dev
+	```
 
-## Getting Started
+## API Endpoints
+- `POST /api/auth/login` — Login
+- `POST /api/auth/register` — Register
+- `GET /api/auth/profile` — Get user profile
+- `PUT /api/auth/profile` — Update profile
+- `PUT /api/auth/change-password` — Change password
+- `GET /api/auth/stats` — Account statistics
+- `GET /api/tasks` — Get all tasks
+- `POST /api/tasks` — Create task
+- `PUT /api/tasks/:id` — Update task
+- `DELETE /api/tasks/:id` — Delete task
+- `GET /api/health` — Health check
 
-### Prerequisites
+## Component Hierarchy
+```
+App
+├── Navbar
+├── PrivateRoute
+├── Dashboard
+│   ├── TaskList
+│   ├── TaskForm
+├── Login
+├── Register
+├── Profile
+├── Settings
+├── Welcome
+```
 
-- Node.js (v16+ recommended)
-- npm
-- MongoDB database (local or Atlas)
+## Deployment
+- Deploy backend (e.g., Render, Heroku, Vercel)
+- Deploy frontend (e.g., Vercel, Netlify)
+- Set CORS and environment variables accordingly
 
-**Important Note for MongoDB Atlas Users:**
-If you are using MongoDB Atlas, ensure your current IP address is added to the IP whitelist in your Atlas project's Network Access settings. Failure to do so will result in connection errors. For development, you can temporarily add `0.0.0.0/0` (allow access from anywhere) but exercise caution in production environments.
+## License
+MIT
+
+---
+For more details, see code comments and API docs in the repository.
 
 ### Environment Variables
 

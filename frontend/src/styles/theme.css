@@ -1,0 +1,54 @@
+
+:root {
+  --font-family: 'Inter', Arial, sans-serif;
+  --primary-color: #1976d2;
+  --secondary-color: #f50057;
+  --background-light: #f5f6fa;
+  --background-dark: #181a1b;
+  --text-light: #222;
+  --text-dark: #fff;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--background-light);
+  color: var(--text-light);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Add more global styles as needed */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --font-family: 'Inter', Arial, sans-serif;
+  --primary-color: #1976d2;
+  --secondary-color: #f50057;
+  --background-light: #f5f6fa;
+  --background-dark: #181a1b;
+  --text-light: #222;
+  --text-dark: #fff;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--background-light);
+  color: var(--text-light);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}

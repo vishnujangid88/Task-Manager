@@ -1,10 +1,22 @@
-import React, { useState, useContext, type JSX } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthContext from '../context/AuthContext';
-import '../css/AuthForm.css';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
+import { styled } from '@mui/material/styles';
 
-const Login = (): JSX.Element => {
+const FeatureBox = styled(Box)(({ theme }) => ({
+  display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8,
+  fontSize: 16, color: theme.palette.text.secondary
+}));
+
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,72 +37,64 @@ const Login = (): JSX.Element => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-visual">
-        <h1>Welcome Back!</h1>
-        <p>
-          Sign in to your account and continue managing your tasks efficiently. 
-          Your productivity journey continues here.
-        </p>
-        <div className="features">
-          <div className="feature">
-            <span className="feature-icon">⚡</span>
-            <span>Lightning fast task management</span>
-          </div>
-          <div className="feature">
-            <span className="feature-icon">🔒</span>
-            <span>Secure and private workspace</span>
-          </div>
-          <div className="feature">
-            <span className="feature-icon">📊</span>
-            <span>Track your productivity</span>
-          </div>
-        </div>
-      </div>
-      <div className="auth-form-container">
-        <div className="auth-form">
-          <h2>Sign In</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Email Address</label>
-              <input 
-                type="email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-                required 
-                disabled={loading}
-                placeholder="Enter your email"
-              />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input 
-                type="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                required 
-                disabled={loading}
-                placeholder="Enter your password"
-              />
-            </div>
-            <button type="submit" disabled={loading}>
-              {loading ? (
-                <>
-                  <span className="loading-spinner"></span>
-                  Signing in...
-                </>
-              ) : (
-                'Sign In'
-              )}
-            </button>
-          </form>
-          <div className="form-footer">
-            <p>Don't have an account?</p>
-            <a href="/register">Create one here</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh" sx={{ fontFamily: 'Inter, Arial, sans-serif' }}>
+      <Paper elevation={6} sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: { xs: '100%', md: 700 }, borderRadius: 4, overflow: 'hidden' }}>
+        <Box flex={1} bgcolor="primary.main" color="primary.contrastText" p={4} display="flex" flexDirection="column" justifyContent="center" alignItems="flex-start">
+          <Typography variant="h4" fontWeight={700} gutterBottom>Welcome Back!</Typography>
+          <Typography variant="body1" mb={2}>
+            Sign in to your account and continue managing your tasks efficiently. Your productivity journey continues here.
+          </Typography>
+          <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.2)' }} />
+          <FeatureBox><span>⚡</span> Lightning fast task management</FeatureBox>
+          <FeatureBox><span>🔒</span> Secure and private workspace</FeatureBox>
+          <FeatureBox><span>📊</span> Track your productivity</FeatureBox>
+        </Box>
+        <Box flex={1} p={4} display="flex" flexDirection="column" justifyContent="center" alignItems="center" bgcolor="background.paper">
+          <Typography variant="h5" fontWeight={600} mb={2}>Sign In</Typography>
+          <Box component="form" onSubmit={handleSubmit} width="100%" maxWidth={320}>
+            <TextField
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loading}
+              fullWidth
+              margin="normal"
+              autoComplete="email"
+            />
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={loading}
+              fullWidth
+              margin="normal"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 2, fontWeight: 600 }}
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </Button>
+          </Box>
+          <Box mt={3} textAlign="center">
+            <Typography variant="body2">Don't have an account?</Typography>
+            <Button component={RouterLink} to="/register" color="secondary" sx={{ mt: 1 }}>
+              Create one here
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 

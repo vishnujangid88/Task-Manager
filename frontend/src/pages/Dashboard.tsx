@@ -1,8 +1,23 @@
-import React, { useState, useEffect, useContext, type JSX } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AuthContext from '../context/AuthContext';
-import '../css/DashBoard.css';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import CheckIcon from '@mui/icons-material/CheckCircle';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import UndoIcon from '@mui/icons-material/Undo';
 
 interface Task {
   _id: string;
@@ -13,7 +28,7 @@ interface Task {
   dueDate?: string; // New: Task due date
 }
 
-const Dashboard = (): JSX.Element => {
+const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -150,190 +165,183 @@ const Dashboard = (): JSX.Element => {
   );
 
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-sidebar">
-        <h3>Overview</h3>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <span className="stat-number">{totalTasks}</span>
-            <span className="stat-label">Total Tasks</span>
-          </div>
-          <div className="stat-card">
-            <span className="stat-number">{completedTasks}</span>
-            <span className="stat-label">Completed</span>
-          </div>
-          <div className="stat-card">
-            <span className="stat-number">{totalTasks - completedTasks}</span>
-            <span className="stat-label">Pending</span>
-          </div>
-        </div>
-      </div>
+    <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={4} minHeight="80vh" sx={{ fontFamily: 'Inter, Arial, sans-serif' }}>
+      <Paper elevation={3} sx={{ p: 3, minWidth: 220, bgcolor: 'background.paper', borderRadius: 4, mb: { xs: 2, md: 0 } }}>
+        <Typography variant="h6" fontWeight={700} gutterBottom>Overview</Typography>
+        <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center" mb={2}>
+          <Chip label={`Total: ${totalTasks}`} color="primary" />
+          <Chip label={`Completed: ${completedTasks}`} color="success" />
+          <Chip label={`Pending: ${totalTasks - completedTasks}`} color="warning" />
+        </Stack>
+      </Paper>
 
-      <div className="dashboard-main">
-        <div className="dashboard-header">
-          <h2>Welcome back, {user?.username || 'Guest'}!</h2>
-          <p>Manage your tasks efficiently and stay productive</p>
-        </div>
-
-        <div className="task-form">
-          <h4>Create New Task</h4>
-          <form onSubmit={handleCreateTask}>
-            <div className="task-form-grid">
-              <div className="form-field task-title-field">
-                <label>Task Title</label>
-                <input
-                  type="text"
-                  placeholder="Enter task title"
-                  value={newTaskTitle}
-                  onChange={(e) => setNewTaskTitle(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-field description-field">
-                <label>Description (Optional)</label>
-                <input
-                  type="text"
-                  placeholder="Add a description"
-                  value={newTaskDescription}
-                  onChange={(e) => setNewTaskDescription(e.target.value)}
-                />
-              </div>
-              {/* New row for Priority and Due Date */}
-              <div className="form-field priority-field">
-                <label>Priority</label>
-                <select
-                  value={newTaskPriority}
-                  onChange={(e) => setNewTaskPriority(e.target.value as 'low' | 'medium' | 'high')}
-                  className="priority-select"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-              <div className="form-field due-date-field">
-                <label>Due Date (Optional)</label>
-                <input
-                  type="date"
-                  value={newTaskDueDate}
-                  onChange={(e) => setNewTaskDueDate(e.target.value)}
-                  className="due-date-input"
-                />
-              </div>
-              {/* Button moved to align with new grid area */}
-              <button type="submit" className="add-task-button">
-                Add Task
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div className="tasks-section">
-          <h3>Your Tasks</h3>
-          <div className="search-bar-container">
-            <input
-              type="text"
-              placeholder="Search tasks..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
+      <Box flex={1}>
+        <Paper elevation={3} sx={{ p: 3, borderRadius: 4, mb: 3 }}>
+          <Typography variant="h5" fontWeight={700} mb={1}>Welcome back, {user?.username || 'Guest'}!</Typography>
+          <Typography variant="body2" mb={2}>Manage your tasks efficiently and stay productive</Typography>
+          <Divider sx={{ mb: 2 }} />
+          <Typography variant="subtitle1" fontWeight={600} mb={1}>Create New Task</Typography>
+          <Box component="form" onSubmit={handleCreateTask} display="flex" flexWrap="wrap" gap={2} alignItems="center">
+            <TextField
+              label="Task Title"
+              value={newTaskTitle}
+              onChange={(e) => setNewTaskTitle(e.target.value)}
+              required
+              disabled={loading}
+              sx={{ flex: 2, minWidth: 180 }}
             />
-          </div>
-          
+            <TextField
+              label="Description (Optional)"
+              value={newTaskDescription}
+              onChange={(e) => setNewTaskDescription(e.target.value)}
+              disabled={loading}
+              sx={{ flex: 2, minWidth: 180 }}
+            />
+            <TextField
+              label="Due Date"
+              type="date"
+              value={newTaskDueDate}
+              onChange={(e) => setNewTaskDueDate(e.target.value)}
+              disabled={loading}
+              sx={{ flex: 1, minWidth: 120 }}
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              label="Priority"
+              select
+              SelectProps={{ native: true }}
+              value={newTaskPriority}
+              onChange={(e) => setNewTaskPriority(e.target.value as 'low' | 'medium' | 'high')}
+              disabled={loading}
+              sx={{ flex: 1, minWidth: 120 }}
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </TextField>
+            <Button type="submit" variant="contained" color="primary" disabled={loading} sx={{ minWidth: 120 }}>
+              Add Task
+            </Button>
+          </Box>
+        </Paper>
+
+        <Paper elevation={3} sx={{ p: 3, borderRadius: 4 }}>
+          <Typography variant="h6" fontWeight={700} mb={2}>Your Tasks</Typography>
+          <TextField
+            label="Search tasks..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
           {loading ? (
-            <div className="loading-container">
-              <div className="loading-spinner"></div>
-              <p>Loading tasks...</p>
-            </div>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={4}>
+              <CircularProgress color="primary" />
+              <Typography variant="body2" mt={2}>Loading tasks...</Typography>
+            </Box>
           ) : filteredTasks.length === 0 ? (
-            <div className="empty-state">
-              <h4>No tasks yet or no matches found!</h4>
-              <p>Create your first task above or try a different search query.</p>
-            </div>
+            <Box textAlign="center" py={4}>
+              <Typography variant="h6" fontWeight={600}>No tasks yet or no matches found!</Typography>
+              <Typography variant="body2">Create your first task above or try a different search query.</Typography>
+            </Box>
           ) : (
-            <ul className="task-list">
+            <Stack spacing={2}>
               {filteredTasks.map((task) => (
-                <li key={task._id} className={`task-item ${task.completed ? 'completed' : ''}`}>
-                  <div className="task-content">
+                <Paper key={task._id} elevation={2} sx={{ p: 2, borderRadius: 3, bgcolor: task.completed ? 'grey.100' : 'background.paper', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box flex={1}>
                     {editingTaskId === task._id ? (
-                      <div className="edit-task-form">
-                        <input
-                          type="text"
+                      <Box display="flex" flexWrap="wrap" gap={2} alignItems="center">
+                        <TextField
                           value={editedTitle}
                           onChange={(e) => setEditedTitle(e.target.value)}
-                          className="edit-task-title-input"
+                          label="Title"
+                          sx={{ minWidth: 120 }}
                         />
-                        <textarea
+                        <TextField
                           value={editedDescription}
                           onChange={(e) => setEditedDescription(e.target.value)}
-                          className="edit-task-description-input"
+                          label="Description"
+                          sx={{ minWidth: 120 }}
                         />
-                        <select
+                        <TextField
+                          label="Due Date"
+                          type="date"
+                          value={editedDueDate}
+                          onChange={(e) => setEditedDueDate(e.target.value)}
+                          sx={{ minWidth: 120 }}
+                          InputLabelProps={{ shrink: true }}
+                        />
+                        <TextField
+                          label="Priority"
+                          select
+                          SelectProps={{ native: true }}
                           value={editedPriority}
                           onChange={(e) => setEditedPriority(e.target.value as 'low' | 'medium' | 'high')}
-                          className="edit-task-priority-select"
+                          sx={{ minWidth: 120 }}
                         >
                           <option value="low">Low</option>
                           <option value="medium">Medium</option>
                           <option value="high">High</option>
-                        </select>
-                        <input
-                          type="date"
-                          value={editedDueDate}
-                          onChange={(e) => setEditedDueDate(e.target.value)}
-                          className="edit-task-due-date-input"
-                        />
-                      </div>
+                        </TextField>
+                      </Box>
                     ) : (
-                      <>
-                        <div className="task-title-priority">
-                          <div className="task-title">{task.title}</div>
-                          {task.priority && <span className={`task-priority priority-${task.priority}`}>{task.priority}</span>}
-                        </div>
-                        {task.description && (
-                          <div className="task-description">{task.description}</div>
+                      <Box>
+                        <Typography variant="subtitle1" fontWeight={600} display="inline">
+                          {task.title}
+                        </Typography>
+                        {task.priority && (
+                          <Chip label={task.priority} color={task.priority === 'high' ? 'error' : task.priority === 'medium' ? 'warning' : 'default'} size="small" sx={{ ml: 1 }} />
                         )}
-                        {task.dueDate && <div className="task-due-date">Due: {new Date(task.dueDate).toLocaleDateString()}</div>}
-                      </>
+                        {task.description && (
+                          <Typography variant="body2" color="text.secondary" mt={0.5}>{task.description}</Typography>
+                        )}
+                        {task.dueDate && (
+                          <Typography variant="caption" color="text.secondary">Due: {new Date(task.dueDate).toLocaleDateString()}</Typography>
+                        )}
+                      </Box>
                     )}
-                  </div>
-                  <div className="task-actions">
+                  </Box>
+                  <Box display="flex" gap={1} alignItems="center">
                     {editingTaskId === task._id ? (
                       <>
-                        <button className="save-btn" onClick={() => handleSaveEdit(task._id)}>
-                          Save
-                        </button>
-                        <button className="cancel-btn" onClick={handleCancelEdit}>
-                          Cancel
-                        </button>
+                        <Tooltip title="Save">
+                          <IconButton color="primary" onClick={() => handleSaveEdit(task._id)}>
+                            <CheckIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Cancel">
+                          <IconButton color="warning" onClick={handleCancelEdit}>
+                            <UndoIcon />
+                          </IconButton>
+                        </Tooltip>
                       </>
                     ) : (
                       <>
-                        <button
-                          className={task.completed ? 'incomplete-btn' : 'complete-btn'}
-                          onClick={() => handleUpdateTask(task._id, !task.completed)}
-                        >
-                          {task.completed ? 'Mark Incomplete' : 'Mark Complete'}
-                        </button>
-                        <button className="edit-btn" onClick={() => handleEditClick(task)}>
-                          Edit
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDeleteTask(task._id)}
-                        >
-                          Delete
-                        </button>
+                        <Tooltip title={task.completed ? 'Mark Incomplete' : 'Mark Complete'}>
+                          <IconButton color={task.completed ? 'warning' : 'success'} onClick={() => handleUpdateTask(task._id, !task.completed)}>
+                            <CheckIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                          <IconButton color="info" onClick={() => handleEditClick(task)}>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                          <IconButton color="error" onClick={() => handleDeleteTask(task._id)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
                       </>
                     )}
-                  </div>
-                </li>
+                  </Box>
+                </Paper>
               ))}
-            </ul>
+            </Stack>
           )}
-        </div>
-      </div>
-    </div>
+        </Paper>
+      </Box>
+    </Box>
   );
 };
 
