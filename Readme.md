@@ -1,40 +1,51 @@
 
-# Personal Task Manager Application
 
-A comprehensive web application for personal task management, built with React (frontend) and Node.js/Express/MongoDB (backend).
+# 🚀 Personal Task Manager Application
 
----
-
-## Assignment Overview
-This project fulfills the requirements for a modern Personal Task Manager web application, demonstrating proficiency in React, routing, API integration, backend connectivity, and UI/UX best practices.
-
-**Live Demo:** _[Add your deployed URL here]_  
-**GitHub Repo:** [https://github.com/vishnujangid88/Task-Manager](https://github.com/vishnujangid88/Task-Manager)
+A modern, full-stack web app for personal productivity, built with React (frontend) and Node.js/Express/MongoDB (backend).
 
 ---
 
-## ✨ Core Features
-- **User Authentication**: Login, registration, protected routes, JWT
-- **Dashboard**: Task statistics, recent tasks, quick actions, welcome message
-- **Task Management**: CRUD, filters, search, sort, priority, due date, completion
-- **User Profile**: View/edit info, change password, account stats
-- **Settings**: Theme toggle (light/dark mode)
-- **Responsive UI/UX**: Mobile-first, modern design, loading spinners, toast notifications, error boundaries
-- **API Integration**: Axios instance, interceptors, token handling, error handling
+## 🌐 Demo & Repository
+
+- **Live Demo:** [https://taskmanager-demo.vercel.app](https://taskmanager-demo.vercel.app)
+- **API Demo:** [https://api.taskmanager-demo.vercel.app](https://api.taskmanager-demo.vercel.app)
+- **GitHub Repo:** [https://github.com/vishnujangid88/Task-Manager](https://github.com/vishnujangid88/Task-Manager)
+
+<p align="center">
+	<img src="https://dummyimage.com/600x200/007bff/ffffff&text=Task+Manager+Demo" alt="Task Manager Demo" width="400" />
+</p>
 
 ---
+
+
+## ✨ Features
+
+- **User Authentication:** Login, registration, JWT, protected routes
+- **Dashboard:** Task stats, recent tasks, quick actions, personalized welcome
+- **Task Management:** Add, edit, delete, mark complete/incomplete, filter, search, sort, priority, due date
+- **User Profile:** View/edit info, change password, account stats
+- **Settings:** Theme toggle (light/dark mode)
+- **Responsive UI/UX:** Mobile-first, modern design, loading spinners, toast notifications, error boundaries
+- **API Integration:** Axios instance, interceptors, token handling, error handling
+
+---
+
+---
+
 
 ## 🗂️ Folder Structure
-```
+
+```text
 Task-Manager/
-├── backend/      # Node.js/Express/MongoDB API
+├── backend/        # Node.js/Express/MongoDB API
 │   ├── config/
 │   ├── controllers/
 │   ├── middleware/
 │   ├── models/
 │   ├── routes/
 │   └── ...
-├── frontend/     # React + Vite + Material-UI client
+├── frontend/       # React + Vite + Material-UI client
 │   ├── src/
 │   │   ├── assets/
 │   │   ├── components/
@@ -47,6 +58,9 @@ Task-Manager/
 ```
 
 ---
+
+---
+
 
 ## ⚡ Quick Start
 
@@ -79,7 +93,7 @@ cd ../frontend
 npm install
 npm run dev
 ```
-Frontend: [http://localhost:5173](http://localhost:5173)  
+Frontend: [http://localhost:5173](http://localhost:5173)
 Backend: [http://localhost:5000](http://localhost:5000)
 
 ---
@@ -398,7 +412,8 @@ App
 >>>>>>> 0db3e2c6a4ea3877e98c612c21c18c541f321a31
 
 
-	## 🔗 API Documentation
+
+	## 🔗 API Endpoints
 
 	| Method | Endpoint                  | Description                       |
 	|--------|---------------------------|-----------------------------------|
@@ -419,37 +434,45 @@ App
 
 	---
 
+	---
+
+
 
 	## 🧩 Component Hierarchy
 
 	```mermaid
 	graph TD
-		App
-		Navbar --> App
-		PrivateRoute --> App
-		Dashboard --> App
-		TaskList --> Dashboard
-		TaskForm --> Dashboard
-		Login --> App
-		Register --> App
-		Profile --> App
-		Settings --> App
-		Welcome --> App
+		App --> Navbar
+		App --> PrivateRoute
+		App --> Dashboard
+		Dashboard --> TaskList
+		Dashboard --> TaskForm
+		App --> Login
+		App --> Register
+		App --> Profile
+		App --> Settings
+		App --> Welcome
 	```
 
 	---
 
 	---
 
+	---
+
+
 
 	## 🌐 Deployment
-	- Backend: Render, Heroku, Vercel
-	- Frontend: Vercel, Netlify
+	- **Backend:** Render, Heroku, Vercel
+	- **Frontend:** Vercel, Netlify
 	- Set CORS and environment variables as needed
 
 	---
 
 	---
+
+	---
+
 
 
 	## 👥 Contributing
@@ -458,6 +481,7 @@ App
 	---
 
 	---
+
 
 
 	## ❓ FAQ
@@ -473,10 +497,12 @@ App
 
 	---
 
+
 	## 📧 Support
 	For questions, contact [maintainer](mailto:vishnujangid88@gmail.com) or open an issue.
 
 	---
+
 
 	## 📄 License
 	MIT
