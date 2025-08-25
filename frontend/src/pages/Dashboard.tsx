@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import { toast } from 'react-toastify';
 import AuthContext from '../context/AuthContext';
 import Box from '@mui/material/Box';
@@ -50,7 +50,7 @@ const Dashboard = () => {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const res = await axios.get<Task[]>('/api/tasks');
+  const res = await api.get<Task[]>('/tasks');
       setTasks(res.data);
     } catch (err) {
       toast.error('Failed to fetch tasks.');
@@ -68,7 +68,7 @@ const Dashboard = () => {
     }
     
     try {
-      await axios.post('/api/tasks', {
+  await api.post('/tasks', {
         title: newTaskTitle,
         description: newTaskDescription,
         priority: newTaskPriority,
@@ -88,7 +88,7 @@ const Dashboard = () => {
 
   const handleUpdateTask = async (id: string, completed: boolean) => {
     try {
-      await axios.put(`/api/tasks/${id}`, { completed });
+  await api.put(`/tasks/${id}`, { completed });
       toast.success('Task status updated successfully!');
       fetchTasks();
     } catch (err) {
@@ -112,7 +112,7 @@ const Dashboard = () => {
     }
 
     try {
-      await axios.put(`/api/tasks/${id}`, {
+  await api.put(`/tasks/${id}`, {
         title: editedTitle.trim(),
         description: editedDescription.trim(),
         priority: editedPriority,
@@ -145,7 +145,7 @@ const Dashboard = () => {
     }
     
     try {
-      await axios.delete(`/api/tasks/${id}`);
+  await api.delete(`/tasks/${id}`);
       toast.success('Task deleted successfully!');
       fetchTasks();
     } catch (err) {

@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import type { AuthContextType } from "../context/AuthContext";
 import { toast } from "react-toastify";
-import axios from "axios";
+import api from "../api/axios";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -46,7 +46,7 @@ const Profile = () => {
   const fetchAccountStats = async () => {
     setStatsLoading(true);
     try {
-      const res = await axios.get<AccountStats>('/api/auth/stats');
+  const res = await api.get<AccountStats>('/auth/stats');
       setAccountStats(res.data);
     } catch (err) {
       console.error("Failed to fetch account stats:", err);
